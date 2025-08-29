@@ -20,11 +20,11 @@ driver = webdriver.Chrome(service=service, options=chrome_options)
 #Устанавливаем таймаут для загрузки страницы
 driver.set_page_load_timeout(3)
 
-url = 'https://omayo.blogspot.com/'
+base_url = 'https://omayo.blogspot.com/'
 
 #Открываем сайт с обработкой таймаута
 try:
-    driver.get(url)
+    driver.get(base_url)
 except Exception as e:
     driver.execute_script("window.stop();")  # Останавливаем загрузку
 driver.maximize_window()
@@ -70,7 +70,7 @@ current_windows = driver.window_handles
 new_window = current_windows[-1]
 #Переключаемся на новое окно
 driver.switch_to.window(new_window)
-assert driver.current_url != url
+assert driver.current_url != base_url
 print("Открыто новое окно")
 
 time.sleep(time_sleep)
@@ -104,7 +104,7 @@ try:
     gmail_button.click()
 except Exception as e:
     driver.execute_script("window.stop();")  # Останавливаем загрузку
-assert driver.current_url != url
+assert driver.current_url != base_url
 print("Открыта новая страница")
 
 time.sleep(time_sleep)
@@ -114,6 +114,7 @@ try:
     driver.back()
 except Exception as e:
     driver.execute_script("window.stop();")  # Останавливаем загрузку
+assert driver.current_url == base_url
 print("Вернулись обратно на https://omayo.blogspot.com/")
 
 time.sleep(time_sleep)
